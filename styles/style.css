@@ -1,0 +1,33 @@
+body {
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  background: radial-gradient(cornflowerblue, white);
+}
+
+.container {
+  margin: auto;
+}
+
+#game div {
+  border: 1px solid black;
+  border-radius: 7px;
+  width: 15%;
+  height: 200px;
+  margin: 10px;
+  display: inline-block;
+}
+
+button {
+  background-color: PapayaWhip;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+h1 {
+  font-size: 50px;
+
+  margin-bottom: 10px;
+}
+
+
+

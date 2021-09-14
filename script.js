@@ -1,5 +1,11 @@
 const gameContainer = document.getElementById("game");
 
+// Variables
+let firstClickedCard = null; //First card clicked
+let secondClickedCard = null; //Second card clicked
+let cardsFlipped = 0; //Counter
+let noClicking = false; //Controls the boolean for clicking ability
+
 const COLORS = [
   "red",
   "blue",
@@ -15,7 +21,7 @@ const COLORS = [
 
 // here is a helper function to shuffle an array
 // it returns the same array with values shuffled
-// it is based on an algorithm called Fisher Yates if you want ot research more
+// it is based on an algorithm called Fisher Yates if you want to research more
 function shuffle(array) {
   let counter = array.length;
 
@@ -59,9 +65,80 @@ function createDivsForColors(colorArray) {
 
 // TODO: Implement this function!
 function handleCardClick(event) {
-  // you can use event.target to see which element was clicked
-  console.log("you just clicked", event.target);
+	// If the card already has the class of flipped
+	if (event.target.classList.contains("flipped")) {
+		return;
+	}
+	
+	// If the card has already been clicked
+	if (noClicking === true) {
+		return;
+	}
+	
+	let currentCard = event.target;
+  	currentCard.style.backgroundColor = currentCard.classList[0];
+	// Assigns value of first and second clicked cards
+	// Adds the flipped class to the card 
+	if (firstClickedCard === null) {
+		firstClickedCard = currentCard;
+		firstClickedCard.classList.add('flipped');
+		// console.log('FirstCard:', firstClickedCard);
+	} else {
+		secondClickedCard = currentCard;
+		secondClickedCard.classList.add('flipped');
+		// console.log('SecondCard:', secondClickedCard);
+	}
+	
+	// Checks to see if two cards were clicked and then allow no more clicks
+	if (firstClickedCard && secondClickedCard) {
+		noClicking = true;
+
+		// Gets the cards class name
+		let card1 = firstClickedCard.className;
+		let card2 = secondClickedCard.className;
+
+		// If the cards match 
+		if (card1 === card2) {
+			// Add 2 to the counter
+			cardsFlipped += 2;
+
+			// Remove the event handler
+			firstClickedCard.removeEventListener("click", handleCardClick);
+			secondClickedCard.removeEventListener("click", handleCardClick);
+			
+			// Set the values back to null
+			firstClickedCard = null;
+			secondClickedCard = null;
+			
+			// Set noClicking back to false
+			noClicking = false;
+		} else {
+			// Sets a one second time for cards that don't match
+			setTimeout(function() {
+			
+			// Clears the background color
+			firstClickedCard.style.backgroundColor = '';
+			secondClickedCard.style.backgroundColor = '';
+			
+			//Removes the flipped class 
+			firstClickedCard.classList.remove("flipped");
+			secondClickedCard.classList.remove("flipped");
+			
+			// Sets the card values back to null
+			firstClickedCard = null;
+			secondClickedCard = null;
+			
+			// Sets noClicking back to false
+			noClicking = false;
+			}, 1000);
+		}
+	}
+	
+	
+	// Sets an alert to say the game is over
+	if (cardsFlipped === COLORS.length) alert("game over!");
 }
+
 
 // when the DOM loads
 createDivsForColors(shuffledColors);
