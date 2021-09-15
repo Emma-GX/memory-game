@@ -132,9 +132,7 @@ function handleCardClick(event) {
 			noClicking = false;
 			}, 1000);
 		}
-	}
-	
-	
+	}	
 	// Sets an alert to say the game is over
 	if (cardsFlipped === COLORS.length) alert("game over!");
 }
