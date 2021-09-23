@@ -112,6 +112,15 @@ function handleCardClick(event) {
 			
 			// Set noClicking back to false
 			noClicking = false;
+
+			setTimeout(function () {
+				//This is an ugly and disgraceful solution to my async problem, and I have brought 
+				//shame upon my dojo from having used it
+				// Sets an alert to say the game is over
+				if (cardsFlipped === COLORS.length) {
+					alert("game over!");
+				}
+			}, 500);
 		} else {
 			// Sets a one second time for cards that don't match
 			setTimeout(function() {
@@ -132,11 +141,8 @@ function handleCardClick(event) {
 			noClicking = false;
 			}, 1000);
 		}
-	}	
-	// Sets an alert to say the game is over
-	if (cardsFlipped === COLORS.length) alert("game over!");
+	}
 }
-
 
 // when the DOM loads
 createDivsForColors(shuffledColors);
